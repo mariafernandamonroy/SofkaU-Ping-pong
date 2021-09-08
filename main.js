@@ -1,6 +1,5 @@
-// window.onload = function() {
 (function(){
-  //MODELO
+  //MODEL
   self.Board = function(width,height){
     this.width = width;
     this.height = height;
@@ -9,6 +8,8 @@
     this.bars = [];
     this.ball = null;
     this.playing = false;
+    this.upperLimit = 0;
+    this.lowerLimit = 400;
   }
 
   self.Board.prototype = {
@@ -29,7 +30,7 @@
       this.board = board;
       this.board.bars.push(this);
       this.kind = "rectangle";
-      this.speed = 30;
+      this.speed = 20;
       }
 
       self.Bar.prototype = {
@@ -66,6 +67,9 @@
         this.x += (this.speed_x * this.direction);
         this.y += (this.speed_y);
       },
+      toString: function(){
+        return "x: " + this.x + " y: "+ this.y;
+      },
       get width(){
         return this.radius * 2;
       },
@@ -82,7 +86,23 @@
     
         this.speed_y = this.speed * -Math.sin(this.bounce_angle);
         this.speed_x = this.speed * Math.cos(this.bounce_angle);
+        
+        if (this.x > this.board.width / 2) this.direction = -1;
+        else this.direction = 1;
+      },
+      collisionBoard(bar) {
+        // Reacts to the collision with a bar received as parameter
+        console.log("EN COLISION")
+        console.log(this.x)
+        let relative_intersect_y = this.x /2;
     
+        let normalized_intersect_y = relative_intersect_y / 1;
+    
+        this.bounce_angle = normalized_intersect_y * this.max_bounce_angle;
+        console.log("angulo: " + this.bounce_angle)
+        this.speed_y = this.speed * -Math.sin(this.bounce_angle);
+        this.speed_x = this.speed * Math.cos(this.bounce_angle);
+        
         if (this.x > this.board.width / 2) this.direction = -1;
         else this.direction = 1;
       }
@@ -90,14 +110,13 @@
   })();
 
   (function(){
-    //VISTA 
+    //VIEW
   self.BoardView = function(canvas,board){
     this.canvas = canvas;
     this.canvas.width = board.width;
     this.canvas.height = board.height;
     this.board = board;
     this.ctx = canvas.getContext("2d");
-    
   }
 
   self.BoardView.prototype = {
@@ -115,6 +134,9 @@
         let bar = this.board.bars[i];
         if (hit(bar, this.board.ball)) {
           this.board.ball.collisions(bar);
+        }if (hit(this.board, this.board.ball)) {
+          console.log("ENTRÓ")
+          this.board.ball.collisionBoard(this.board);
         }
       }
     },
@@ -128,30 +150,35 @@
     }
   }
   function hit(a, b) {
-    //Revisa si a colisiona con b
+    //Check if a collides with b
     var hit = false;
-    //Colisiones hirizontales
+    //Horizontals collisions
     if (b.x + b.width >= a.x && b.x < a.x + a.width) {
-      //Colisiona verticales
+      //vertical collisions
       if (b.y + b.height >= a.y && b.y < a.y + a.height) hit = true;
+      console.log("hc+vc1:" + hit);
     }
-  
-    //Colisión de a con b
+    if(b.y <= 0 ||  b.y >= 276){
+      console.log("b.y position: "+ b.y);
+      hit = true;
+    }
+      
+    //Check if a collides with b
     if (b.x <= a.x && b.x + b.width >= a.x + a.width) {
       if (b.y <= a.y && b.y + b.height >= a.y + a.height) hit = true;
+      console.log("hc+vc2:" + hit);
     }
-  
-    //Colision b con a
+    //Check if b collides with a
     if (a.x <= b.x && a.x + a.width >= b.x + b.width) {
-      //Colisiona verticales
+      //vertical collisions
       if (a.y <= b.y && a.y + a.height >= b.y + b.height) hit = true;
+      console.log("hc+vc3:" + hit);
     }
     return hit;
   }
 
   function draw(ctx,element){
-    // console.log(element.kind);
-    // if(element !== null && element.hasOwnProperty("kind")){
+    // Draw the bars and ball on canvas
       switch(element.kind){
         case "rectangle":
           ctx.fillRect(element.x,element.y,element.width,element.height);
@@ -169,6 +196,7 @@
   // }
   })();
 
+  //Objects creation
   var board = new Board(400,280);
   var bar = new Bar(20,100,10,60,board);
   var bar2 = new Bar(370,100,10,60,board);
@@ -181,7 +209,7 @@
 
   window.requestAnimationFrame(main);
 
-
+  // Keyboard event to move the ball
   document.addEventListener("keydown",function(ev){
     
     if(ev.keyCode == 38){
@@ -203,13 +231,15 @@
       board.playing = !board.playing;
     }
     
-    console.log(bar.toString());
+    console.log("Bar position: "+bar.toString());
+    console.log("Bar2 position: "+bar2.toString());
+    console.log("Ball position: "+ball.toString());
   })
 
   self.addEventListener("load",main);
 
   function main(){
-    //CONTROLADOR
+    //CONTROLLER
     board_view.play();
     window.requestAnimationFrame(main);
   }
