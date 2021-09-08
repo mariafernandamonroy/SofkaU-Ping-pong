@@ -10,7 +10,6 @@
     this.ball = null;
   }
 
-  
   self.Board.prototype = {
     get elements(){
       var elements = this.bars.map(function(bar){return bar;});
@@ -51,11 +50,18 @@
       this.y = y;
       this.radius = radius;
       this.speed_y = 0;
-      this.speed_x = 3;
+      this.speed_x = 2;
       this.board = board;
+      this.direction = 1;
 
       board.ball = this;
       this.kind = "circle";
+    }
+    self.Ball.prototype = {
+      move: function(){
+        this.x += (this.speed_x * this.direction);
+        this.y += (this.speed_y);
+      }
     }
   })();
 
@@ -83,6 +89,7 @@
     play: function(){
       this.clean();
       this.draw();
+      this.board.ball.move();
     }
   }
 
@@ -113,17 +120,24 @@
   console.log(ball);
 
   window.requestAnimationFrame(main);
+  setTimeout(function(){
+    ball.direction = -1;
+  },2000);
 
   document.addEventListener("keydown",function(ev){
     ev.preventDefault();
     if(ev.keyCode == 38){
       bar.up();
-      bar2.up();
     }
     else if(ev.keyCode == 40){
       bar.down();
+    }else if(ev.keyCode == 87){
+      bar2.up();
+    }
+    else if(ev.keyCode == 83){
       bar2.down();
     }
+    
     console.log(bar.toString());
   })
 
