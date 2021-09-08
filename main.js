@@ -13,7 +13,7 @@
   
   self.Board.prototype = {
     get elements(){
-      var elements = this.bars;
+      var elements = this.bars.map(function(bar){return bar;});
       elements.push(this.ball);
       return elements;
     }
@@ -29,7 +29,7 @@
       this.board = board;
       this.board.bars.push(this);
       this.kind = "rectangle";
-      this.speed = 20;
+      this.speed = 30;
       }
 
       self.Bar.prototype = {
@@ -105,8 +105,8 @@
   })();
 
   var board = new Board(400,280);
-  var bar = new Bar(20,100,10,60,board);
-  var bar2 = new Bar(370,100,10,60,board);
+  var bar = new Bar(20,200,10,60,board);
+  var bar2 = new Bar(370,200,10,60,board);
   var canvas = document.getElementById('canvas');
   var board_view = new BoardView(canvas,board);
   var ball = new Ball(200,100,5,board);
