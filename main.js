@@ -118,7 +118,6 @@
     this.board = board;
     this.ctx = canvas.getContext("2d");
   }
-
   self.BoardView.prototype = {
     clean: function(){
       this.ctx.clearRect(0,0,this.board.width,this.board.height);
