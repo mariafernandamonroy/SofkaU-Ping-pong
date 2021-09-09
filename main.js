@@ -118,6 +118,7 @@
     this.ctx = canvas.getContext("2d");
     this.sc1 = "1";
     this.sc2 = "1";
+    this.in = true;
   }
   self.BoardView.prototype = {
     clean: function(){
@@ -137,28 +138,37 @@
     },
     change_scores: function(score1,score2){
       score1 = score1.toString();
-      score1 = score1.toString();
+      score2 = score2.toString();
       this.sc1 = score1;
       this.sc2 = score2; 
     },
     check_collisions() {
+      this.in = true;
       for (let i = this.board.bars.length - 1; i >= 0; i--) {
         let bar = this.board.bars[i];
         if (hit(bar, this.board.ball)) {
           this.board.ball.collisions(bar);
-        }if (hit(this.board, this.board.ball)) {
-          if(this.board.ball.x <= 0){
+        }if (hit(this.board, this.board.ball) && this.in) {
+          if(this.board.ball.x <= 0 && this.in){
             this.sc2 = parseInt(this.sc2);
             let score1 = this.sc1;
             let score2 = this.sc2 + 1;
             this.change_scores(score1,score2);
-          }else if(this.board.ball.x >= 400){
+            this.in = false;
+
+            console.log("playing: " + board.playing)
+            this.board.playing = !board.playing;
+            this.board.ball.x = 200;
+          }else if(this.board.ball.x >= 380 && this.in){
             this.sc1 = parseInt(this.sc1);
             let score1 = this.sc1 +1;
             let score2 = this.sc2;
             this.change_scores(score1,score2);
+            this.in = false;
+            
           }else if(this.board.ball.y <= 0 ||  this.board.ball.y >= 276){
             this.board.ball.collisionBoard(this.board);
+            this.in = false;
           }
         }
       }
@@ -167,7 +177,7 @@
       if(this.board.playing){
         this.clean();
         this.draw();
-        this,this.check_collisions();
+        this.check_collisions();
         this.board.ball.move();
       }
     }
@@ -215,7 +225,6 @@
           break;
       }
     }
-  // }
   })();
 
   //Objects creation
@@ -265,6 +274,3 @@
     board_view.play();
     window.requestAnimationFrame(main);
   }
-
-
-// }
