@@ -123,10 +123,20 @@
       this.ctx.clearRect(0,0,this.board.width,this.board.height);
     },
     draw: function(){
+      this.ctx.font = "bold 20px Courier New";
+      this.ctx.textAlign = "start";
+      this.ctx.fillText("Score 1", 110,20);
+      this.ctx.fillText("Score 2", 210,20);
+      var score1 = this.ctx.fillText("0", 140,40);
+      var score2 =this.ctx.fillText("0", 245,40);
       for(var i = this.board.elements.length-1; i >=0; i--){
         var el = this.board.elements[i]
         draw(this.ctx,el);
       }
+    },
+    scores: function(score1,score2){
+      this.score1 = this.ctx.fillText(score1, 140,40);
+      this.score2 = this.ctx.fillText(score2, 140,40);
     },
     check_collisions() {
       for (let i = this.board.bars.length - 1; i >= 0; i--) {
