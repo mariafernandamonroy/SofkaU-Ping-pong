@@ -1,0 +1,37 @@
+*{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.contenedor{
+  display: flex;
+  justify-content: center;
+}
+.contenedor_canvas{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px 20px;
+  width: 40%;
+}
+canvas{
+  border: 3px solid ;
+}
+h1{
+  display: flex;
+  justify-content: center;
+}
+.contenedor_instrucciones{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px 20px;
+  width: 40%;
+}
+.contenedor_instrucciones_titulo{
+  font-weight: bold;
+}
+.contenedor_instrucciones_cuerpo{
+  font-size: 11px;
+}
+u1{
+  display: flex;
+}

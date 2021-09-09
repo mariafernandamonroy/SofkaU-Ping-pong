@@ -5,34 +5,37 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ping-Pong</title>
-  <style>
-    canvas{border: solid;}
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Ping Pong</h1>
-  <div> 
-    <div><canvas id="canvas"></canvas></div>
-    <div>
-      <h3>¿Cómo jugar?</h3>
-      <p>
-        Este juego involucra dos personas y el objetivo es 
-        ganar cuando la bola salga del tablero del oponente.
-      </p>
-      <ul>
-        <li>Movimientos de la barra izqueirda: 
-          <ul>
-            <li><p>Letra W: </p> Mover hacia arriba </li>
-            <li><p>Letra S: </p> Mover hacia abajo </li>
-          </ul>
-        </li>
-        <li>Movimientos de la barra derecha: 
-          <ul>
-            <li><p>Flecha ⬆️: </p> Mover hacia arriba </li>
-            <li><p>Flecha ⬇️: </p> Mover hacia abajo </li>
-          </ul>
-        </li>
-      </ul>
+  
+  <div class="contenedor"> 
+    <div class="contenedor_canvas">
+      <h1>Ping Pong</h1>
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="contenedor_instrucciones">
+      <h3 class="contenedor_instrucciones_titulo">¿Cómo jugar?</h3>
+      <div class="contenedor_instrucciones_cuerpo">
+        <p>
+          Este juego involucra dos personas y el objetivo es 
+          ganar cuando la bola salga del tablero del oponente.
+        </p>
+        <ul>
+          <li>Movimientos de la barra izqueirda: 
+            <ul>
+              <li><p>Letra W: </p> Mover hacia arriba </li>
+              <li><p>Letra S: </p> Mover hacia abajo </li>
+            </ul>
+          </li>
+          <li>Movimientos de la barra derecha: 
+            <ul>
+              <li><p>Flecha ⬆️: </p> Mover hacia arriba </li>
+              <li><p>Flecha ⬇️: </p> Mover hacia abajo </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <script src="main.js"></script>
