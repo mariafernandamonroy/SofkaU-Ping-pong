@@ -143,8 +143,9 @@
       this.sc2 = score2; 
     },
     check_collisions() {
-      this.in = true;
+      
       for (let i = this.board.bars.length - 1; i >= 0; i--) {
+        this.in = true;
         let bar = this.board.bars[i];
         if (hit(bar, this.board.ball)) {
           this.board.ball.collisions(bar);
@@ -155,17 +156,20 @@
             let score2 = this.sc2 + 1;
             this.change_scores(score1,score2);
             this.in = false;
-
-            console.log("playing: " + board.playing)
             this.board.playing = !board.playing;
             this.board.ball.x = 200;
+            this.board.bars[0].y = 100;
+            this.board.bars[1].y = 100;
           }else if(this.board.ball.x >= 380 && this.in){
             this.sc1 = parseInt(this.sc1);
             let score1 = this.sc1 +1;
             let score2 = this.sc2;
             this.change_scores(score1,score2);
             this.in = false;
-            
+            this.board.playing = !board.playing;
+            this.board.ball.x = 200;
+            this.board.bars[0].y = 100;
+            this.board.bars[1].y = 100;
           }else if(this.board.ball.y <= 0 ||  this.board.ball.y >= 276){
             this.board.ball.collisionBoard(this.board);
             this.in = false;
