@@ -99,7 +99,6 @@
         let normalized_intersect_y = relative_intersect_y / 1;
     
         this.bounce_angle = normalized_intersect_y * this.max_bounce_angle;
-        console.log("angulo: " + this.bounce_angle)
         this.speed_y = this.speed * -Math.sin(this.bounce_angle);
         this.speed_x = this.speed * Math.cos(this.bounce_angle);
         
@@ -144,8 +143,16 @@
         if (hit(bar, this.board.ball)) {
           this.board.ball.collisions(bar);
         }if (hit(this.board, this.board.ball)) {
-          console.log("ENTRÓ")
-          this.board.ball.collisionBoard(this.board);
+          if(this.board.ball <= 0){
+            let score1 =+ score1;
+            this.scores(score1,this.score2)
+          }else if(this.board.ball >= 400){
+            let score2 =+ score2;
+            console.log("score2=" + score2)
+            this.scores(this.score1,score2)
+          }else if(this.board.ball <= 0 ||  this.board.ball >= 276){
+            this.board.ball.collisionBoard(this.board);
+          }
         }
       }
     },
@@ -165,13 +172,14 @@
     if (b.x + b.width >= a.x && b.x < a.x + a.width) {
       //vertical collisions
       if (b.y + b.height >= a.y && b.y < a.y + a.height) hit = true;
-      console.log("hc+vc1:" + hit);
     }
     if(b.y <= 0 ||  b.y >= 276){
-      console.log("b.y position: "+ b.y);
       hit = true;
     }
-      
+    if(b.x <= 0 ||  b.x >= 400){
+      hit = true;
+    }
+    
     //Check if a collides with b
     if (b.x <= a.x && b.x + b.width >= a.x + a.width) {
       if (b.y <= a.y && b.y + b.height >= a.y + a.height) hit = true;
