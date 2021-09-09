@@ -1,9 +1,13 @@
 *{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+body{
+  background-image: url("https://image.freepik.com/foto-gratis/suelo-madera_1088-197.jpg");
 }
 .contenedor{
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+
 }
 .contenedor_canvas{
   display: flex;
@@ -14,6 +18,7 @@
 }
 canvas{
   border: 3px solid ;
+  background-color: greenyellow;
 }
 h1{
   display: flex;
@@ -24,10 +29,15 @@ h1{
   flex-direction: column;
   justify-content: center;
   margin: 0px 20px;
-  width: 40%;
+  padding: 20px;
+  width: 30%;
+  border: 1px solid black;
+  border-radius: 15px;
 }
 .contenedor_instrucciones_titulo{
   font-weight: bold;
+  width: 50%;
+  margin: 0 auto;
 }
 .contenedor_instrucciones_cuerpo{
   font-size: 11px;
