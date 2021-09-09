@@ -116,6 +116,8 @@
     this.canvas.height = board.height;
     this.board = board;
     this.ctx = canvas.getContext("2d");
+    this.sc1 = "1";
+    this.sc2 = "1";
   }
   self.BoardView.prototype = {
     clean: function(){
@@ -126,16 +128,18 @@
       this.ctx.textAlign = "start";
       this.ctx.fillText("Score 1", 110,20);
       this.ctx.fillText("Score 2", 210,20);
-      var score1 = this.ctx.fillText("0", 140,40);
-      var score2 =this.ctx.fillText("0", 245,40);
+      this.score1 = this.ctx.fillText(this.sc1.toString(), 140,40);
+      this.score2 =this.ctx.fillText(this.sc2.toString(), 245,40);
       for(var i = this.board.elements.length-1; i >=0; i--){
         var el = this.board.elements[i]
         draw(this.ctx,el);
       }
     },
-    scores: function(score1,score2){
-      this.score1 = this.ctx.fillText(score1, 140,40);
-      this.score2 = this.ctx.fillText(score2, 140,40);
+    change_scores: function(score1,score2){
+      score1 = score1.toString();
+      score1 = score1.toString();
+      this.sc1 = score1;
+      this.sc2 = score2; 
     },
     check_collisions() {
       for (let i = this.board.bars.length - 1; i >= 0; i--) {
@@ -143,14 +147,17 @@
         if (hit(bar, this.board.ball)) {
           this.board.ball.collisions(bar);
         }if (hit(this.board, this.board.ball)) {
-          if(this.board.ball <= 0){
-            let score1 =+ score1;
-            this.scores(score1,this.score2)
-          }else if(this.board.ball >= 400){
-            let score2 =+ score2;
-            console.log("score2=" + score2)
-            this.scores(this.score1,score2)
-          }else if(this.board.ball <= 0 ||  this.board.ball >= 276){
+          if(this.board.ball.x <= 0){
+            this.sc2 = parseInt(this.sc2);
+            let score1 = this.sc1;
+            let score2 = this.sc2 + 1;
+            this.change_scores(score1,score2);
+          }else if(this.board.ball.x >= 400){
+            this.sc1 = parseInt(this.sc1);
+            let score1 = this.sc1 +1;
+            let score2 = this.sc2;
+            this.change_scores(score1,score2);
+          }else if(this.board.ball.y <= 0 ||  this.board.ball.y >= 276){
             this.board.ball.collisionBoard(this.board);
           }
         }
@@ -183,13 +190,11 @@
     //Check if a collides with b
     if (b.x <= a.x && b.x + b.width >= a.x + a.width) {
       if (b.y <= a.y && b.y + b.height >= a.y + a.height) hit = true;
-      console.log("hc+vc2:" + hit);
     }
     //Check if b collides with a
     if (a.x <= b.x && a.x + a.width >= b.x + b.width) {
       //vertical collisions
       if (a.y <= b.y && a.y + a.height >= b.y + b.height) hit = true;
-      console.log("hc+vc3:" + hit);
     }
     return hit;
   }
